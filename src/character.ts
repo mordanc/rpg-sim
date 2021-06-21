@@ -15,7 +15,7 @@ const convertOpinionValue = (opinionValue: number): Opinions => {
 
 export class Character {
   private _name = '';
-  private _opinionValues: { [key: string]: number } = {};
+  private _opinionsOfCharacters: { [key: string]: number } = {};
   private _mood: Attitudes = 'happy';
 
   constructor(name: string, mood: Attitudes) {
@@ -36,11 +36,11 @@ export class Character {
   }
 
   resetOpinionOfCharacter(characterName: string) {
-    this._opinionValues[characterName] = 0;
+    this._opinionsOfCharacters[characterName] = 0;
   }
 
   meetCharacter(characterName: string) {
-    const opinionValue = this._opinionValues[characterName];
+    const opinionValue = this._opinionsOfCharacters[characterName];
 
     if (!opinionValue) {
       this.resetOpinionOfCharacter(characterName);
@@ -50,16 +50,16 @@ export class Character {
   getOpinionOfCharacter(characterName: string): Opinions {
     this.meetCharacter(characterName);
 
-    const opinionValue = this._opinionValues[characterName];
+    const opinionValue = this._opinionsOfCharacters[characterName];
     return convertOpinionValue(opinionValue);
   }
 
   lowerOpinionOfCharacter(characterName: string, amount: OpinionChange) {
-    this._opinionValues[characterName] -= amount;
+    this._opinionsOfCharacters[characterName] -= amount;
   }
 
   raiseOpinionOfCharacter(characterName: string, amount: OpinionChange) {
-    this._opinionValues[characterName] += amount;
+    this._opinionsOfCharacters[characterName] += amount;
   }
 
   greetCharacter(characterName: string) {

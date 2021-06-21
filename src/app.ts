@@ -3,18 +3,14 @@ import promptSync from 'prompt-sync';
 
 import { Character } from './character';
 import { Merchant } from './merchant';
-import { config } from './config';
-import {
-  Attitudes,
-  ConversationList,
-  ConversationTopics,
-  OpinionChange,
-} from './types';
 import {
   angryResponsesToHappy,
   conversations,
   happyResponsesToAngry,
 } from './data';
+
+import { Attitudes, ConversationTopics } from './types';
+import { logDialogue } from './conversation/utils';
 
 const prompt = promptSync({ sigint: true });
 
@@ -40,12 +36,6 @@ const shortConversation = (
 ) => {
   const { start, middle, middleEnd, end } = conversations[topic];
 
-  const logSentence = (speaker: Character, sentence: string) => {
-    const color = speaker.name === 'Bob' ? chalk.blue : chalk.yellow;
-
-    console.log(color(speaker.name, ':', sentence));
-  };
-
   const selectRandomSentence = (conversationArray: string[]) =>
     conversationArray[Math.floor(Math.random() * conversationArray.length)];
 
@@ -70,7 +60,7 @@ const shortConversation = (
 
     const segment = getConversationSegment(currentSentence, speaker.mood);
 
-    const constructSentence = (
+    const constructSentenceWithRebuttal = (
       myMood: Attitudes,
       otherPersonMood: Attitudes
     ) => {
@@ -91,7 +81,10 @@ const shortConversation = (
       return `${rebuttal || ''} ${selectRandomSentence(segment)}`;
     };
 
-    logSentence(speaker, constructSentence(speaker.mood, listener.mood));
+    logDialogue(
+      speaker,
+      constructSentenceWithRebuttal(speaker.mood, listener.mood)
+    );
   }
 };
 

@@ -65,13 +65,13 @@ export const conversations: ConversationList = {
         `This season is too ${config.weather} all the time.`,
         `Yeah, its ${config.weather} again. Just perfect.`,
         `Do you get off on ${config.weather} days or something?`,
-        `It's too fucking ${config.weather} and ${config.temperature}`,
+        `It's too fucking ${config.temperature} and ${config.weather}`,
       ],
     },
     middleEnd: {
       happy: [
         'Well, I had better get going',
-        'Sorry I need to go',
+        'Sorry, I need to go',
         `Well, I'll be off then`,
         'Alright I have to go, speak with you later',
       ],
