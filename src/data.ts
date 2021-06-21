@@ -1,11 +1,13 @@
 import { config } from './config';
-import { ConversationList, OpinionChange, Response } from './types';
+import { Attitudes, ConversationList, OpinionChange, Response } from './types';
 
 export const responses: Response = {
   happy: { greeting: 'Hi! How are you?', farewell: 'Farewell!' },
   angry: { greeting: 'Fuck you', farewell: 'Go fuck yourself' },
   neutral: { greeting: 'Hey there', farewell: 'Bye now' },
 };
+
+export const moods: Attitudes[] = ['happy', 'angry', 'sad'];
 
 export const happyResponsesToAngry = [
   'Oh. Well,',

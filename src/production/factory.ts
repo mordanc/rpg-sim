@@ -1,17 +1,25 @@
+import { generateWorkers } from '../characterGeneration/generateWorkers';
+import { logGreen } from '../utils/logging';
 import { Worker } from '../worker';
+import { FactoryType, Good } from './types';
 
-export type Factories = 'lumber mill' | 'mine' | 'farm';
-export type GoodTypes = 'base' | 'intermediate' | 'finished';
-
+const getOutputFromFactoryType = (factoryType: FactoryType): Good => {
+  if (factoryType === 'lumber mill') return 'lumber';
+  if (factoryType === 'mine') return 'iron ore';
+  return 'food';
+};
 export class Factory {
-  public tier = 1;
-  public goodType = 'base';
+  public level = 1;
+  public productionTier = 'base';
+  public goodType: Good;
 
   constructor(
-    public type: Factories,
+    public type: FactoryType,
     public name: string,
     public workerList: Worker[] = []
-  ) {}
+  ) {
+    this.goodType = getOutputFromFactoryType(type);
+  }
 
   addWorker(worker: Worker) {
     this.workerList = this.workerList ? [...this.workerList, worker] : [worker];
@@ -30,5 +38,20 @@ export class Factory {
       grossProduction * environmentConditionsMultiplier;
 
     return weightedProduction;
+  }
+
+  generateWorkers(listOfLaborSkills: number[]) {
+    this.workerList = generateWorkers(listOfLaborSkills);
+  }
+
+  logWorkers() {
+    let logString = '';
+
+    logGreen(`List of workers at ${this.name} factory:\n`);
+
+    this.workerList.map((worker) => {
+      logString += `${worker.name}: ${worker.output}\n`;
+    });
+    console.log(logString);
   }
 }
