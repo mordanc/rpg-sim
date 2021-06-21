@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { Character } from '../character';
+import { Character } from '../characters/character';
 
 export const logDialogue = (speaker: Character, sentence: string) => {
   const color = speaker.name === 'Bob' ? chalk.blue : chalk.yellow;

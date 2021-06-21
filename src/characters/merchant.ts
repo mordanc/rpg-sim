@@ -1,6 +1,6 @@
 import { Character } from './character';
-import { Item } from './item';
-import { Attitudes, OpinionChange } from './types';
+import { Item } from '../item';
+import { Attitudes, OpinionChange } from '../types';
 
 type HaggleResult = 'successful' | 'unsuccessful';
 // responses should depend on relation to character and personality of merchant

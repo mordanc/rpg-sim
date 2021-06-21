@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import promptSync from 'prompt-sync';
 
-import { Character } from './character';
-import { Merchant } from './merchant';
+import { Character } from './characters/character';
+import { Merchant } from './characters/merchant';
 import {
   angryResponsesToHappy,
   conversations,
@@ -42,6 +42,6 @@ const simulateHaggle = () => {
   lumberMill.generateWorkers([8, 7, 9, 8, 6, 7, 5]);
 
   console.log(lumberMill.calculateProduction());
-  lumberMill.logWorkers();
+  lumberMill.logProduction();
   // console.log(angryResponsesToHappy)
 })();

@@ -1,5 +1,5 @@
-import { Attitudes, OpinionChange, Opinions, Response } from './types';
-import { responses } from './data';
+import { Attitudes, OpinionChange, Opinions, Response } from '../types';
+import { responses } from '../data';
 
 const convertOpinionValue = (opinionValue: number): Opinions => {
   if (opinionValue >= 30) {
