@@ -13,6 +13,7 @@ import { Attitudes, ConversationTopics } from './types';
 import { logDialogue } from './conversation/utils';
 import { shortConversation } from './conversation/shortConversation';
 import { Factory } from './production/factory';
+import { Region } from './region';
 
 const prompt = promptSync({ sigint: true });
 
@@ -38,10 +39,19 @@ const simulateHaggle = () => {
   shortConversation('weather', bob, alice);
 
   const lumberMill = new Factory('lumber mill', 'Half Moon Mill');
+  const ironMine = new Factory('mine', 'Silverblood Mine');
 
   lumberMill.generateWorkers([8, 7, 9, 8, 6, 7, 5]);
+  ironMine.generateWorkers([7, 6, 8, 7, 6, 8, 5, 7]);
 
-  console.log(lumberMill.calculateProduction());
-  lumberMill.logProduction();
+  // console.log(lumberMill.calculateProduction());
+  // lumberMill.logProduction();
+
+  const vale = new Region('Vale', 'Temperate');
+
+  vale.addFactory(lumberMill);
+  vale.addFactory(ironMine);
+
+  vale.getRegionalProduction();
   // console.log(angryResponsesToHappy)
 })();

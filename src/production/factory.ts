@@ -2,7 +2,7 @@ import { generateWorkers } from '../characterGeneration/generateWorkers';
 import { logGreen } from '../utils/logging';
 import { askYesOrNo } from '../utils/prompts';
 import { Worker } from '../worker';
-import { FactoryType, Good } from './types';
+import { FactoryType, Good, GoodsOutput, ProductionTier } from './types';
 
 const getOutputFromFactoryType = (factoryType: FactoryType): Good => {
   if (factoryType === 'lumber mill') return 'lumber';
@@ -12,7 +12,7 @@ const getOutputFromFactoryType = (factoryType: FactoryType): Good => {
 
 export class Factory {
   public level = 1;
-  public productionTier = 'base';
+  public productionTier: ProductionTier = 'base';
   public goodType: Good;
 
   constructor(
@@ -36,8 +36,9 @@ export class Factory {
     // grab from region object (tbd)
     const environmentConditionsMultiplier = 0.8;
 
-    const weightedProduction =
-      grossProduction * environmentConditionsMultiplier;
+    const weightedProduction = Math.floor(
+      grossProduction * environmentConditionsMultiplier
+    );
 
     return weightedProduction;
   }
