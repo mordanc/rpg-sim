@@ -1,5 +1,6 @@
 import { Attitudes, OpinionChange, Opinions, Response } from '../types';
 import { responses } from '../data';
+import { Item } from '../item';
 
 const convertOpinionValue = (opinionValue: number): Opinions => {
   if (opinionValue >= 30) {
@@ -13,15 +14,16 @@ const convertOpinionValue = (opinionValue: number): Opinions => {
   return 'angry';
 };
 
+const clothes = new Item(10, 5);
 export class Character {
-  private _name = '';
   private _opinionsOfCharacters: { [key: string]: number } = {};
-  private _mood: Attitudes = 'happy';
+  defenseValue = 10;
+  attackValue = 5;
+  private _health = 50;
+  private armor = clothes;
+  private _inventory: Item[] = [];
 
-  constructor(name: string, mood: Attitudes) {
-    this._name = name;
-    this._mood = mood;
-  }
+  constructor(private _name: string, private _mood: Attitudes) {}
 
   get name() {
     return this._name;
@@ -33,6 +35,24 @@ export class Character {
 
   get mood(): Attitudes {
     return this._mood;
+  }
+
+  get health() {
+    return this._health;
+  }
+
+  decreaseHealth(hp: number) {
+    this._health = this._health - hp;
+  }
+
+  equipArmor(item: Item) {
+    this.armor = item;
+  }
+
+  removeArmor() {
+    this._inventory.push(this.armor);
+
+    this.armor = clothes;
   }
 
   resetOpinionOfCharacter(characterName: string) {

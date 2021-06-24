@@ -14,6 +14,7 @@ import { logDialogue } from './conversation/utils';
 import { shortConversation } from './conversation/shortConversation';
 import { Factory } from './production/factory';
 import { Region } from './region';
+import { fight } from './characters/fight';
 
 const prompt = promptSync({ sigint: true });
 
@@ -53,5 +54,7 @@ const simulateHaggle = () => {
   vale.addFactory(ironMine);
 
   vale.getRegionalProduction();
+
+  fight(bob, alice);
   // console.log(angryResponsesToHappy)
 })();

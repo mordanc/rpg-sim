@@ -27,6 +27,7 @@ export class Factory {
     this.workerList = this.workerList ? [...this.workerList, worker] : [worker];
   }
 
+  // returns weighted production, after any negative effects
   calculateProduction() {
     const grossProduction = this.workerList?.reduce(
       (output, worker) => output + worker.output,
@@ -43,6 +44,10 @@ export class Factory {
     return weightedProduction;
   }
 
+  /**
+   * populate factory with random workers with given labor levels
+   * @param listOfLaborSkills size determines number of workers
+   */
   generateWorkers(listOfLaborSkills: number[]) {
     this.workerList = generateWorkers(listOfLaborSkills);
   }
