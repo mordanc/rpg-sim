@@ -17,8 +17,8 @@ const convertOpinionValue = (opinionValue: number): Opinions => {
 const clothes = new Item(10, 5);
 export class Character {
   private _opinionsOfCharacters: { [key: string]: number } = {};
-  defenseValue = 10;
-  attackValue = 5;
+  defenseValue = 2;
+  attackValue = 7;
   private _health = 50;
   private armor = clothes;
   private _inventory: Item[] = [];
@@ -41,7 +41,7 @@ export class Character {
     return this._health;
   }
 
-  decreaseHealth(hp: number) {
+  private decreaseHealth(hp: number) {
     this._health = this._health - hp;
   }
 
@@ -86,5 +86,10 @@ export class Character {
     const opinionOfCharacter = this.getOpinionOfCharacter(characterName);
 
     return responses[opinionOfCharacter]['greeting'];
+  }
+
+  getHit(damage: number) {
+    const weightedDamage = damage - this.defenseValue;
+    this.decreaseHealth(weightedDamage);
   }
 }

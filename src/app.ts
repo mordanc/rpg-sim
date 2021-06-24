@@ -14,7 +14,7 @@ import { logDialogue } from './conversation/utils';
 import { shortConversation } from './conversation/shortConversation';
 import { Factory } from './production/factory';
 import { Region } from './region';
-import { fight } from './characters/fight';
+import { fight, groupFight } from './characters/fight';
 
 const prompt = promptSync({ sigint: true });
 
@@ -36,6 +36,10 @@ const simulateHaggle = () => {
 (function main() {
   const bob = new Merchant('Bob', 'angry');
   const alice = new Character('Alice', 'happy');
+  const meadow = new Character('Meadow', 'sad');
+
+  const tim = new Merchant('Tim', 'angry');
+  const alex = new Character('Alex', 'happy');
 
   shortConversation('weather', bob, alice);
 
@@ -55,6 +59,10 @@ const simulateHaggle = () => {
 
   vale.getRegionalProduction();
 
-  fight(bob, alice);
+  const groupA = [bob, alice, meadow];
+  const groupB = [tim, alex];
+
+  groupFight(groupA, groupB);
+  // fight(bob, alice);
   // console.log(angryResponsesToHappy)
 })();
