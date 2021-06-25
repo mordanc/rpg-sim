@@ -8,7 +8,7 @@ export type FactoryList = {
 export class Region {
   private _factories: FactoryList;
 
-  constructor(private _name: string, private _climate: string) {
+  constructor(private _name: string) {
     this._factories = { base: [], intermediate: [], finished: [] };
   }
 
@@ -16,13 +16,19 @@ export class Region {
     return this._name;
   }
 
-  get climate() {
-    return this._climate;
-  }
+  // get climate() {
+  //   return this._climate;
+  // }
 
   addFactory(factory: Factory) {
     const tier = factory.productionTier;
     this._factories[tier] = [...this._factories[tier], factory];
+  }
+
+  addFactories(factories: Factory[]) {
+    factories.map((factory) => {
+      this.addFactory(factory);
+    });
   }
 
   getRegionalProduction() {
@@ -40,5 +46,10 @@ export class Region {
     });
 
     console.log(production);
+    return production;
+  }
+
+  incrementTime() {
+    const production = this.getRegionalProduction();
   }
 }

@@ -8,6 +8,8 @@ import { Factory } from './production/factory';
 import { Region } from './region';
 import { groupFight } from './characters/fight';
 import { generateCharacter } from './characterGeneration/generateWorkers';
+import { World } from './world';
+import { randomIntFromInterval } from './utils/math';
 
 const prompt = promptSync({ sigint: true });
 
@@ -26,6 +28,36 @@ const simulateHaggle = () => {
   }
 };
 
+const incrementTime = (rounds: number) => {
+  // array of regions represents the world
+  const vale = new Region('The Vale');
+  const moors = new Region('The Moors');
+
+  const halfMoonMill = new Factory('lumber mill', 'Half Moon Mill');
+  const silverbloodMine = new Factory('mine', 'Silverblood Mine');
+
+  const westEdgeMill = new Factory('lumber mill', 'West Edge Mill');
+  const deeprockMine = new Factory('mine', 'Deeprock Mine');
+
+  const factories: Factory[] = [
+    halfMoonMill,
+    silverbloodMine,
+    westEdgeMill,
+    deeprockMine,
+  ];
+  factories.map((factory) => {
+    factory.generateWorkers(randomIntFromInterval(20, 40));
+  });
+
+  vale.addFactories([halfMoonMill, silverbloodMine]);
+  moors.addFactories([westEdgeMill, deeprockMine]);
+
+  const world = new World([vale, moors]);
+
+  console.log(world.getAllRegionProduction());
+  // map through world and call each regions increment time operations
+};
+
 (function main() {
   const bob = new Merchant('Bob', 'angry');
   const alice = new Character('Alice', 'happy', 10);
@@ -34,30 +66,34 @@ const simulateHaggle = () => {
   const tim = new Character('Tim', 'angry', 10);
   const alex = new Character('Alex', 'happy', 10);
 
-  shortConversation('weather', bob, alice);
+  // shortConversation('weather', bob, alice);
 
-  const lumberMill = new Factory('lumber mill', 'Half Moon Mill');
-  const ironMine = new Factory('mine', 'Silverblood Mine');
+  // const lumberMill = new Factory('lumber mill', 'Half Moon Mill');
+  // const ironMine = new Factory('mine', 'Silverblood Mine');
 
-  lumberMill.generateWorkers(31);
-  ironMine.generateWorkers(20);
+  // lumberMill.generateWorkers(31);
+  // ironMine.generateWorkers(20);
 
-  const vale = new Region('Vale', 'Temperate');
+  // const vale = new Region('Vale');
 
-  vale.addFactory(lumberMill);
-  vale.addFactory(ironMine);
+  // vale.addFactory(lumberMill);
+  // vale.addFactory(ironMine);
 
-  vale.getRegionalProduction();
+  // vale.getRegionalProduction();
 
-  const attackers = [bob, alice];
-  const defenders = [tim, alex];
+  // const attackers = [bob, alice];
+  // const defenders = [tim, alex];
 
-  lumberMill.logWorkers();
-  ironMine.logWorkers();
+  // TODO below sometimes does infinite loop
 
-  lumberMill.getAttacked(attackers);
+  // lumberMill.logWorkers();
+  // ironMine.logWorkers();
 
-  lumberMill.logWorkers();
+  // lumberMill.getAttacked(attackers);
+
+  // lumberMill.logWorkers();
+
+  incrementTime(1);
 
   // groupFight(attackers, defenders);
 })();

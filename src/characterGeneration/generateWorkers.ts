@@ -1,5 +1,6 @@
-import { Character, randomIntFromInterval } from '../characters/character';
+import { Character } from '../characters/character';
 import { moods } from '../data';
+import { randomIntFromInterval } from '../utils/math';
 import { Worker } from '../worker';
 import { femaleFirstNames, maleFirstNmes } from './names';
 

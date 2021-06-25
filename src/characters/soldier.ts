@@ -1,5 +1,5 @@
 import { Attitudes } from '../types';
-import { Character, randomIntFromInterval } from './character';
+import { Character } from './character';
 
 // export class Soldier extends Character {
 //   constructor(_name: string, _mood: Attitudes, private _fightingSkill: number) {

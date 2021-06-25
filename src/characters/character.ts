@@ -2,9 +2,7 @@ import { Attitudes, OpinionChange, Opinions, Response } from '../types';
 import { responses } from '../data';
 import { Item } from '../item';
 import { CharacterStatus } from '../production/types';
-
-export const randomIntFromInterval = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
+import { randomIntFromInterval } from '../utils/math';
 
 const convertOpinionValue = (opinionValue: number): Opinions => {
   if (opinionValue >= 30) {
