@@ -39,7 +39,10 @@ const logRound = (
   console.log(`Round ${round}:`, attackerHealth, defenderHealth);
 };
 
-export const groupFight = (groupA: Character[], groupB: Character[]) => {
+export const groupFight = <T extends Character, U extends Character>(
+  groupA: T[],
+  groupB: U[]
+): [T[], U[]] => {
   const sizeA = groupA.length;
   const sizeB = groupB.length;
 
@@ -64,6 +67,8 @@ export const groupFight = (groupA: Character[], groupB: Character[]) => {
   } else if (isGroupDead(groupB)) {
     logRed(`Defenders were wiped out. ${numWoundedInGroup(groupB)} survived.`);
   }
+
+  return [groupA, groupB];
 };
 
 const isGroupDead = (group: Character[]) =>

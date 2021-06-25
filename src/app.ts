@@ -28,7 +28,7 @@ const simulateHaggle = () => {
 
 (function main() {
   const bob = new Merchant('Bob', 'angry');
-  const alice = new Character('Alice', 'happy');
+  const alice = new Character('Alice', 'happy', 10);
   const meadow = new Character('Meadow', 'sad');
 
   const tim = new Character('Tim', 'angry', 10);
@@ -49,17 +49,15 @@ const simulateHaggle = () => {
 
   vale.getRegionalProduction();
 
-  const attackers = [
-    bob,
-    alice,
-    meadow,
-    generateCharacter(),
-    generateCharacter(),
-  ];
+  const attackers = [bob, alice];
   const defenders = [tim, alex];
 
   lumberMill.logWorkers();
   ironMine.logWorkers();
+
+  lumberMill.getAttacked(attackers);
+
+  lumberMill.logWorkers();
 
   // groupFight(attackers, defenders);
 })();

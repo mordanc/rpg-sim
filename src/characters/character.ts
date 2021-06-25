@@ -3,9 +3,8 @@ import { responses } from '../data';
 import { Item } from '../item';
 import { CharacterStatus } from '../production/types';
 
-export function randomIntFromInterval(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+export const randomIntFromInterval = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
 
 const convertOpinionValue = (opinionValue: number): Opinions => {
   if (opinionValue >= 30) {

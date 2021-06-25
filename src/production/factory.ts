@@ -1,4 +1,6 @@
 import { generateWorkers } from '../characterGeneration/generateWorkers';
+import { Character } from '../characters/character';
+import { groupFight } from '../characters/fight';
 import { logGreen } from '../utils/logging';
 import { askYesOrNo } from '../utils/prompts';
 import { Worker } from '../worker';
@@ -29,10 +31,13 @@ export class Factory {
 
   // returns weighted production, after any negative effects
   calculateProduction() {
-    const grossProduction = this.workerList?.reduce(
-      (output, worker) => output + worker.output,
-      0
-    );
+    const grossProduction = this.workerList?.reduce((output, worker) => {
+      if (worker.status !== 'conscious') {
+        return output;
+      }
+
+      return output + worker.output;
+    }, 0);
 
     // grab from region object (tbd)
     const environmentConditionsMultiplier = 0.8;
@@ -42,6 +47,12 @@ export class Factory {
     );
 
     return weightedProduction;
+  }
+
+  getAttacked(attackers: Character[]) {
+    const [_, workers] = groupFight(attackers, this.workerList);
+
+    this.workerList = workers;
   }
 
   /**
