@@ -3,18 +3,11 @@ import promptSync from 'prompt-sync';
 
 import { Character } from './characters/character';
 import { Merchant } from './characters/merchant';
-import {
-  angryResponsesToHappy,
-  conversations,
-  happyResponsesToAngry,
-} from './data';
-
-import { Attitudes, ConversationTopics } from './types';
-import { logDialogue } from './conversation/utils';
 import { shortConversation } from './conversation/shortConversation';
 import { Factory } from './production/factory';
 import { Region } from './region';
-import { fight, groupFight } from './characters/fight';
+import { groupFight } from './characters/fight';
+import { generateCharacter } from './characterGeneration/generateWorkers';
 
 const prompt = promptSync({ sigint: true });
 
@@ -38,8 +31,8 @@ const simulateHaggle = () => {
   const alice = new Character('Alice', 'happy');
   const meadow = new Character('Meadow', 'sad');
 
-  const tim = new Merchant('Tim', 'angry');
-  const alex = new Character('Alex', 'happy');
+  const tim = new Character('Tim', 'angry', 10);
+  const alex = new Character('Alex', 'happy', 10);
 
   shortConversation('weather', bob, alice);
 
@@ -49,9 +42,6 @@ const simulateHaggle = () => {
   lumberMill.generateWorkers([8, 7, 9, 8, 6, 7, 5]);
   ironMine.generateWorkers([7, 6, 8, 7, 6, 8, 5, 7]);
 
-  // console.log(lumberMill.calculateProduction());
-  // lumberMill.logProduction();
-
   const vale = new Region('Vale', 'Temperate');
 
   vale.addFactory(lumberMill);
@@ -59,10 +49,14 @@ const simulateHaggle = () => {
 
   vale.getRegionalProduction();
 
-  const groupA = [bob, alice, meadow];
-  const groupB = [tim, alex];
+  const attackers = [
+    bob,
+    alice,
+    meadow,
+    generateCharacter(),
+    generateCharacter(),
+  ];
+  const defenders = [tim, alex];
 
-  groupFight(groupA, groupB);
-  // fight(bob, alice);
-  // console.log(angryResponsesToHappy)
+  groupFight(attackers, defenders);
 })();
