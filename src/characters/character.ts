@@ -20,6 +20,7 @@ const convertOpinionValue = (opinionValue: number): Opinions => {
 };
 
 const clothes = new Item(10, 5);
+
 export class Character {
   private _opinionsOfCharacters: { [key: string]: number } = {};
   defenseValue = 2;

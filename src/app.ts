@@ -39,8 +39,8 @@ const simulateHaggle = () => {
   const lumberMill = new Factory('lumber mill', 'Half Moon Mill');
   const ironMine = new Factory('mine', 'Silverblood Mine');
 
-  lumberMill.generateWorkers([8, 7, 9, 8, 6, 7, 5]);
-  ironMine.generateWorkers([7, 6, 8, 7, 6, 8, 5, 7]);
+  lumberMill.generateWorkers(31);
+  ironMine.generateWorkers(20);
 
   const vale = new Region('Vale', 'Temperate');
 
@@ -58,5 +58,8 @@ const simulateHaggle = () => {
   ];
   const defenders = [tim, alex];
 
-  groupFight(attackers, defenders);
+  lumberMill.logWorkers();
+  ironMine.logWorkers();
+
+  // groupFight(attackers, defenders);
 })();

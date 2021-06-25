@@ -48,8 +48,8 @@ export class Factory {
    * populate factory with random workers with given labor levels
    * @param listOfLaborSkills size determines number of workers
    */
-  generateWorkers(listOfLaborSkills: number[]) {
-    this.workerList = generateWorkers(listOfLaborSkills);
+  generateWorkers(totalLabor: number) {
+    this.workerList = generateWorkers(totalLabor);
   }
 
   logWorkers() {
