@@ -40,41 +40,46 @@ const logRound = (
 };
 
 export const groupFight = <T extends Character, U extends Character>(
-  groupA: T[],
-  groupB: U[]
+  attackers: T[],
+  defenders: U[]
 ): [T[], U[]] => {
-  const sizeA = groupA.length;
-  const sizeB = groupB.length;
+  const sizeA = attackers.length;
+  const sizeB = defenders.length;
 
   const largestGroup = sizeA >= sizeB ? sizeA : sizeB;
 
-  while (!isGroupDead(groupA) && !isGroupDead(groupB)) {
+  while (!isGroupDead(attackers) && !isGroupDead(defenders)) {
     for (let i = 0; i < largestGroup; i++) {
-      if (groupA[i] && groupB[i]) {
-        fight(groupA[i], groupB[i]);
-      } else if (groupA[i] && !groupB[i]) {
-        const randomIndex = Math.floor(Math.random() * groupB.length);
-        fight(groupA[i], groupB[randomIndex]);
-      } else if (!groupA[i] && groupB[i]) {
-        const randomIndex = Math.floor(Math.random() * groupA.length);
-        fight(groupB[i], groupA[randomIndex]);
+      if (attackers[i] && defenders[i]) {
+        fight(attackers[i], defenders[i]);
+      } else if (attackers[i] && !defenders[i]) {
+        // TODO this could select a dead character
+        const randomIndex = Math.floor(Math.random() * defenders.length);
+        fight(attackers[i], defenders[randomIndex]);
+      } else if (!attackers[i] && defenders[i]) {
+        const randomIndex = Math.floor(Math.random() * attackers.length);
+        fight(defenders[i], attackers[randomIndex]);
       }
     }
   }
 
-  if (isGroupDead(groupA)) {
-    logRed(`Attackers were wiped out. ${numWoundedInGroup(groupA)} survived.`);
-  } else if (isGroupDead(groupB)) {
-    logRed(`Defenders were wiped out. ${numWoundedInGroup(groupB)} survived.`);
+  if (isGroupDead(attackers)) {
+    logRed(
+      `Attackers were wiped out. ${numWoundedInGroup(attackers)} survived.`
+    );
+  } else if (isGroupDead(defenders)) {
+    logRed(
+      `Defenders were wiped out. ${numWoundedInGroup(defenders)} survived.`
+    );
   }
 
-  return [groupA, groupB];
+  return [attackers, defenders];
 };
 
-const isGroupDead = (group: Character[]) =>
+export const isGroupDead = (group: Character[]) =>
   group.every((character) => character.health <= 0);
 
-const numWoundedInGroup = (group: Character[]) =>
+export const numWoundedInGroup = (group: Character[]) =>
   group.reduce((acc, character) => {
     if (character.status === 'unconscious') {
       return acc + 1;
